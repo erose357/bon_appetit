@@ -20,16 +20,21 @@ class RecipeTest < Minitest::Test
   def test_it_tracks_amount_of_a_recipe_required
     r = Recipe.new("Cheese Pizza")
     r.add_ingredient("Flour", 500)
-    binding.pry
+
     assert_equal 500, r.amount_required("Flour")
   end
 
-  # def test_it_can_convert_centi_units
-  #   r = Recipe.new("Cheese Pizza")
-  #   pantry = Pantry.new
-  #   r.add_ingredient("Flour", 500)
-  #
-  #   assert_equal 5, pantry.convert_units(r)
-  # end
+  def test_it_can_convert_centi_units
+    r = Recipe.new("Cheese Pizza")
+    pantry = Pantry.new
+    r.add_ingredient("Cayenne Pepper", 0.025)
+    r.add_ingredient("Cheese", 75)
+    r.add_ingredient("Flour", 500)
+    expected = {"Cayenne Pepper" => {quantity: 25, units: "Milli-Units"},
+                "Cheese"         => {quantity: 75, units: "Universal Units"},
+                "Flour"          => {quantity: 5, units: "Centi-Units"}}
+
+    assert_equal expected, pantry.convert_units(r)
+  end
 
 end

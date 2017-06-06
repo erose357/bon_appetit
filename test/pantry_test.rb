@@ -49,7 +49,7 @@ class PantryTest < Minitest::Test
 
   def test_it_can_convert_milli_units
     pantry = Pantry.new
-binding.pry
+
     assert_equal 750, pantry.convert_milli_units(0.750)
   end
 
