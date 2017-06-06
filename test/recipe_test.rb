@@ -1,7 +1,8 @@
 require './lib/recipe'
+require './lib/pantry'
 require 'minitest/autorun'
 require 'minitest/pride'
-require 'pry'
+
 
 class RecipeTest < Minitest::Test
   def test_it_has_a_name
@@ -35,6 +36,51 @@ class RecipeTest < Minitest::Test
                 "Flour"          => {quantity: 5, units: "Centi-Units"}}
 
     assert_equal expected, pantry.convert_units(r)
+  end
+
+  def test_it_can_convert_a_different_recipe
+    r = Recipe.new("Cheese Pizza")
+    pantry = Pantry.new
+    r.add_ingredient("Cayenne Pepper", 0.75)
+    r.add_ingredient("Cheese", 95)
+    r.add_ingredient("Flour", 800)
+    expected = {"Cayenne Pepper" => {quantity: 750, units: "Milli-Units"},
+                "Cheese"         => {quantity: 95, units: "Universal Units"},
+                "Flour"          => {quantity: 8, units: "Centi-Units"}}
+
+    assert_equal expected, pantry.convert_units(r)
+  end
+
+  def test_add_to_shopping_list
+    pantry = Pantry.new
+    r = Recipe.new("Cheese Pizza")
+    r.add_ingredient("Cheese", 20)
+    r.add_ingredient("Flour", 20)
+
+    pantry.add_to_shopping_list(r)
+    expected = {"Cheese" => 20, "Flour" => 20}
+
+    assert_equal expected, pantry.shopping_list
+  end
+
+  def test_add_another_recipe
+    pantry = Pantry.new
+    r = Recipe.new("Cheese Pizza")
+    r.add_ingredient("Cheese", 20)
+    r.add_ingredient("Flour", 20)
+    pantry.add_to_shopping_list(r)
+    expected = {"Cheese" => 20, "Flour" => 20}
+
+    assert_equal expected, pantry.shopping_list
+
+    r = Recipe.new("Spaghetti")
+    r.add_ingredient("Noodles", 10)
+    r.add_ingredient("Sauce", 10)
+    r.add_ingredient("Cheese", 5)
+    pantry.add_to_shopping_list(r)
+    expected = {"Cheese" => 25, "Flour" => 20, "Noodles" => 10, "Sauce" => 10}
+
+    assert_equal expected, pantry.shopping_list
   end
 
 end

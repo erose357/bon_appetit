@@ -1,10 +1,11 @@
-require 'pry'
+
 class Pantry
 
-  attr_reader :stock
+  attr_reader :stock, :shopping_list
 
   def initialize
     @stock = {}
+    @shopping_list = {}
   end
 
   def stock_check(item)
@@ -15,15 +16,24 @@ class Pantry
     stock[item] = 0
   end
 
-
   def restock(item, quantity)
     stock[item] += quantity
+  end
+
+  def add_to_shopping_list(recipe)
+    recipe.ingredients.each do |k,v|
+      if shopping_list.keys.include?(k)
+        shopping_list[k] += v
+      else
+        shopping_list[k] = v
+      end
+    end
   end
 
   def convert_units(recipe)
     conversion = {}
     recipe.ingredients.each do |k,v|
-      if v > 100                      
+      if v > 100
         a = convert_centi_units(v)
         conversion[k] = { quantity: a, units: "Centi-Units" }
       elsif v < 1
@@ -43,7 +53,5 @@ class Pantry
   def convert_milli_units(number)
     number*1000
   end
-
-
 
 end
