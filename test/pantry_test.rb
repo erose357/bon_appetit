@@ -19,14 +19,13 @@ class PantryTest < Minitest::Test
 
   def test_add_stock_with_quantity_zero
     pantry = Pantry.new
-    pantry.add_stock("Cheese")
-
+  
     assert_equal 0, pantry.stock_check("Cheese")
   end
 
   def test_can_restock
     pantry = Pantry.new
-    pantry.add_stock("Cheese")
+    pantry.stock_check("Cheese")
     pantry.restock("Cheese", 10)
 
     assert_equal 10, pantry.stock_check("Cheese")
@@ -34,7 +33,7 @@ class PantryTest < Minitest::Test
 
   def test_can_restock_further
     pantry = Pantry.new
-    pantry.add_stock("Cheese")
+    pantry.stock_check("Cheese")
     pantry.restock("Cheese", 10)
     pantry.restock("Cheese",20)
 
@@ -52,9 +51,5 @@ class PantryTest < Minitest::Test
 
     assert_equal 750, pantry.convert_milli_units(0.750)
   end
-
-
-
-
 
 end

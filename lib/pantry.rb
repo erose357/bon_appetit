@@ -9,11 +9,11 @@ class Pantry
   end
 
   def stock_check(item)
-    stock[item]
-  end
-
-  def add_stock(item)
-    stock[item] = 0
+    if stock.keys.include?(item)
+      stock[item]
+    else
+      stock[item] = 0
+    end
   end
 
   def restock(item, quantity)
