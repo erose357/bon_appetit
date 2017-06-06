@@ -1,9 +1,13 @@
+require_relative 'pantry'
+
 class Recipe
   attr_reader :name, :ingredients
-  
+  # attr_accessor :pantry
+
   def initialize(name)
     @name = name
     @ingredients = {}
+    @pantry = Pantry.new
   end
 
   def ingredient_types

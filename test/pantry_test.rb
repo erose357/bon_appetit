@@ -41,6 +41,20 @@ class PantryTest < Minitest::Test
     assert_equal 30, pantry.stock_check("Cheese")
   end
 
+  def test_it_can_convert_centi_units
+    pantry = Pantry.new
+
+    assert_equal 2, pantry.convert_centi_units(200)
+  end
+
+  def test_it_can_convert_milli_units
+    pantry = Pantry.new
+binding.pry
+    assert_equal 750, pantry.convert_milli_units(0.750)
+  end
+
+
+
 
 
 end
